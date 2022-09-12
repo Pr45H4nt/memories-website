@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Add Memory
+{% endblock title %}
+    
+
+{% block content %}
+    
+
+<center>
+    <h1>Add Memory</h1></center>
+    <center>
+        <div class="container border shadow-lg p-3 mb-5 bg-white rounded">
+            <form action="" method="post">
+                {% csrf_token %}
+              {{form.error}}
+            {% for fields in form %}
+            <div class="mb-3 mt-3">
+                {{fields.label}} <br>
+                {{fields}}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Post</button>
+        </form>
+    </div>
+</center>
+
+{% endblock content %}

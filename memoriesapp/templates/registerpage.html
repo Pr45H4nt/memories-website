@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Register
+{% endblock title %}
+    
+
+{% block content %}
+<center>
+<h1>Create Your Account Here</h1></center>
+<center>
+<div class="container border shadow-lg p-3 mb-5 bg-white rounded">
+<form action="" method="post">
+  {% csrf_token %}
+  
+  {{form.errors}}
+    {% for fields in form %}
+    <div class="mb-3 mt-3">
+      {{fields.label}} <br>
+      {{fields}}
+    </div>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+  <br><br><br>Already have an account? <a href="{% url 'loginpage' %}"><Button class="btn btn-dark">Login</Button></a>
+</div>
+</center>
+
+
+
+
+
+{% endblock content %}
+    
