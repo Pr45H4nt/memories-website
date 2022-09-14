@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-    'memoriesapp'
+    'memoriesapp',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [

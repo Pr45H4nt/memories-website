@@ -2,7 +2,7 @@ from django.shortcuts import render , redirect
 from .forms import RegisterForm , loginForm , addform
 from django.contrib.auth import authenticate , login , logout 
 from django.contrib.auth.decorators import login_required
-from .models import Memories
+from .models import Memories , comments
 # Create your views here.
 def registerpage(request):
     f = RegisterForm()
@@ -45,7 +45,7 @@ def logoutpage(request):
 
 @login_required(login_url='loginpage')
 def home(request):
-    objects = Memories.objects.filter(user=request.user)
+    objects = Memories.objects.all()
     qwerty = request.GET.get('qwery')
     if qwerty is not None:
         objects = objects.filter(title__icontains = qwerty)
@@ -96,6 +96,19 @@ def delete_item(request,slug):
     if obj.user == request.user:
         obj.delete()
         return redirect("home")
-        
+
+@login_required(login_url='loginpage')
+def readmore(request,slug):
+    obj = Memories.objects.get(slug=slug)
+    if request.method == "POST":
+        comment = request.POST.get('comment')
+        if comment != "":
+            new_comment = comments(User=request.user , memory=obj , comment=comment)
+            new_comment.save()
+    data = {
+        'm' : obj,
+        'comments': obj.allcomments.all()
+    }
+    return render(request, "memory.html", data)
         
 

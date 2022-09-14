@@ -1,41 +1,44 @@
 {% extends 'base.html' %}
-{% load humanize %}
 
 {% block title %}
-    Home
+    {{m.title}}
 {% endblock title %}
-
+{% load humanize %}
 
 {% block content %}
-   <center> <h1>Hello {{request.user.username|title}}</h1>
-    THESE ARE YOUR MEMORIES <br> <br>
-   </center>
-{% for m in memory %}
 <div class="container border shadow-lg p-3 mb-5 bg-white rounded">
-@{{m.user}}
-    <h5>{{m.title}}</h5> 
+
+    <h5>{{m.title}}</h5>
     <p> {{m.content}}</p>
     {{m.created_date|naturaltime}}
-
 <br><br>
 
 {% if m.user == request.user %}
+    
 <a href="{% url 'editmem' slug=m.slug %}"><button class="btn btn-secondary">Edit</button></a> &nbsp;
 <a href="{% url 'deletemem' slug=m.slug %}"><button class="btn btn-secondary">Delete</button></a>
-    
 {% endif %}
     
-    <a href="{% url 'readmore' slug=m.slug %}"><button class="btn btn-secondary">Read More</button></a>
 </div>
-{% empty %}
-<center>
-<div class="card">
-    <h1">No Items to show</h1>
-</div>
-</center>
-{% endfor %}
-    
 
+<h4>comments</h4>
+<hr>
+<center>
+{% for c in comments %}
+
+   <h5> Posted by {{c.User}} <br></h5>
+    <p>{{c.comment}}</p>
+    {{c.created_date}}
+    <br> <br> <br> <hr>
+{% endfor %}
+<br> <br>
+    <form action="" method="post">
+        {% csrf_token %}
+        <input type="text" name = "comment" placeholder="Post Your Comment">
+        <input type="submit" value="POST">
+    </form>
+    <br>
+</center>
 {% endblock content %}
     
     

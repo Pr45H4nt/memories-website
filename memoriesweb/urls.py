@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path , include
 from memoriesapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,5 +24,8 @@ urlpatterns = [
     path('', views.home, name = "home"),
     path('add-memories/', views.Addmemory, name = "addmemory"),
     path('edit-memory/<slug>', views.edit_memory, name = "editmem"),
-    path('delete-memory/<slug>', views.delete_item, name = "deletemem")
+    path('delete-memory/<slug>', views.delete_item, name = "deletemem"),
+    path('readmore/<slug>', views.readmore, name = "readmore"),
+    path('api/', include("api.urls"))
+
 ]
